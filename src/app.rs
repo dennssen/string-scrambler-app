@@ -4,43 +4,27 @@
 pub struct TemplateApp {
     // Example stuff:
     label: String,
-
-    #[serde(skip)] // This how you opt-out of serialization of a field
-    value: f32,
+    scrambled: String,
 }
 
 impl Default for TemplateApp {
     fn default() -> Self {
         Self {
             // Example stuff:
-            label: "Hello World!".to_owned(),
-            value: 2.7,
+            label: "".to_owned(),
+            scrambled: "".to_owned()
         }
     }
 }
 
 impl TemplateApp {
     /// Called once before the first frame.
-    pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        // This is also where you can customize the look and feel of egui using
-        // `cc.egui_ctx.set_visuals` and `cc.egui_ctx.set_fonts`.
-
-        // Load previous app state (if any).
-        // Note that you must enable the `persistence` feature for this to work.
-        if let Some(storage) = cc.storage {
-            return eframe::get_value(storage, eframe::APP_KEY).unwrap_or_default();
-        }
-
+    pub fn new(_: &eframe::CreationContext<'_>) -> Self {
         Default::default()
     }
 }
 
 impl eframe::App for TemplateApp {
-    /// Called by the frame work to save state before shutdown.
-    fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        eframe::set_value(storage, eframe::APP_KEY, self);
-    }
-
     /// Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         // Put your widgets into a `SidePanel`, `TopBottomPanel`, `CentralPanel`, `Window` or `Area`.
@@ -67,24 +51,37 @@ impl eframe::App for TemplateApp {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             // The central panel the region left after adding TopPanel's and SidePanel's
-            ui.heading("eframe template");
-
-            ui.horizontal(|ui| {
-                ui.label("Write something: ");
-                ui.text_edit_singleline(&mut self.label);
+            ui.heading("String Scrambler");
+            egui::ScrollArea::vertical()
+                .id_salt("input scroll")
+                .max_height(100.0)
+                .enable_scrolling(true)
+                .stick_to_bottom(true)
+                .show(ui, |ui|{
+                    ui.label("Your String: ");
+                    ui.text_edit_multiline(&mut self.label);
+                });
+            
+            ui.horizontal(|ui|{
+                if ui.button("Scramble!").clicked() {
+                    self.scrambled = scramble(self.label.clone());
+                    self.label = String::new();
+                }
+                if ui.button("📋").clicked(){
+                    ui.output_mut(|o| o.copied_text = String::from(self.scrambled.clone()))
+                }
             });
 
-            ui.add(egui::Slider::new(&mut self.value, 0.0..=10.0).text("value"));
-            if ui.button("Increment").clicked() {
-                self.value += 1.0;
-            }
-
+            egui::ScrollArea::vertical()
+                .id_salt("output scroll")
+                .max_height(100.0)
+                .enable_scrolling(true)
+                .stick_to_bottom(true)
+                .show(ui, |ui|{
+                    ui.label(&self.scrambled);
+                });
+                
             ui.separator();
-
-            ui.add(egui::github_link_file!(
-                "https://github.com/emilk/eframe_template/blob/main/",
-                "Source code."
-            ));
 
             ui.with_layout(egui::Layout::bottom_up(egui::Align::LEFT), |ui| {
                 powered_by_egui_and_eframe(ui);
@@ -106,4 +103,22 @@ fn powered_by_egui_and_eframe(ui: &mut egui::Ui) {
         );
         ui.label(".");
     });
+}
+
+fn scramble(string: String) -> String{
+    use rand::random_range;
+
+    let string_count;
+    let mut string_char: Vec<char> = string.chars().collect();
+    let mut scrambled_string: String = String::new();
+
+    string_count = string_char.len() as i32;
+
+    for _ in 0..string_count {
+        let random_index = random_range(0..string_char.len());
+        scrambled_string.push(*string_char.get(random_index).unwrap());
+        string_char.remove(random_index);
+    }
+
+    scrambled_string
 }

@@ -3,6 +3,20 @@
 version = 3
 
 [[package]]
+name = "StringScramblerApp"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui",
+ "env_logger",
+ "log",
+ "rand 0.9.0",
+ "serde",
+ "wasm-bindgen-futures",
+ "web-sys",
+]
+
+[[package]]
 name = "ab_glyph"
 version = "0.2.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -127,11 +141,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e89da841a80418a9b391ebaea17f5c112ffaaa96f621d2c285b5174da76b9011"
 dependencies = [
  "cfg-if",
- "getrandom",
+ "getrandom 0.2.11",
  "once_cell",
  "serde",
  "version_check",
- "zerocopy",
+ "zerocopy 0.7.32",
 ]
 
 [[package]]
@@ -888,19 +902,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "eframe_template"
-version = "0.1.0"
-dependencies = [
- "eframe",
- "egui",
- "env_logger",
- "log",
- "serde",
- "wasm-bindgen-futures",
- "web-sys",
-]
-
-[[package]]
 name = "egui"
 version = "0.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1305,7 +1306,19 @@ checksum = "fe9006bed769170c11f845cf00c7c1e9092aeb3f268e007c3e760ac68008070f"
 dependencies = [
  "cfg-if",
  "libc",
- "wasi",
+ "wasi 0.11.0+wasi-snapshot-preview1",
+]
+
+[[package]]
+name = "getrandom"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "73fea8450eea4bac3940448fb7ae50d91f034f941199fcd9d909a5a07aa455f0"
+dependencies = [
+ "cfg-if",
+ "libc",
+ "r-efi",
+ "wasi 0.14.2+wasi-0.2.4",
 ]
 
 [[package]]
@@ -1824,7 +1837,7 @@ version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "681030a937600a36906c185595136d26abfebb4aa9c65701cefcaf8578bb982b"
 dependencies = [
- "proc-macro-crate 1.3.1",
+ "proc-macro-crate",
  "proc-macro2",
  "quote",
  "syn",
@@ -2221,21 +2234,11 @@ checksum = "5b40af805b3121feab8a3c29f04d8ad262fa8e0561883e7653e024ae4479e6de"
 
 [[package]]
 name = "proc-macro-crate"
-version = "1.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f4c021e1093a56626774e81216a4ce732a735e5bad4868a03f3ed65ca0c3919"
-dependencies = [
- "once_cell",
- "toml_edit 0.19.15",
-]
-
-[[package]]
-name = "proc-macro-crate"
 version = "3.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ecf48c7ca261d60b74ab1a7b20da18bede46776b2e55535cb958eb595c5fa7b"
 dependencies = [
- "toml_edit 0.22.22",
+ "toml_edit",
 ]
 
 [[package]]
@@ -2282,14 +2285,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "r-efi"
+version = "5.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "74765f6d916ee2faa39bc8e68e4f3ed8949b48cccdac59983d287a7cb71ce9c5"
+
+[[package]]
 name = "rand"
 version = "0.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
 dependencies = [
  "libc",
- "rand_chacha",
- "rand_core",
+ "rand_chacha 0.3.1",
+ "rand_core 0.6.4",
+]
+
+[[package]]
+name = "rand"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3779b94aeb87e8bd4e834cee3650289ee9e0d5677f976ecdb6d219e5f4f6cd94"
+dependencies = [
+ "rand_chacha 0.9.0",
+ "rand_core 0.9.3",
+ "zerocopy 0.8.24",
 ]
 
 [[package]]
@@ -2299,7 +2319,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e6c10a63a0fa32252be49d21e7709d4d4baf8d231c2dbce1eaa8141b9b127d88"
 dependencies = [
  "ppv-lite86",
- "rand_core",
+ "rand_core 0.6.4",
+]
+
+[[package]]
+name = "rand_chacha"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d3022b5f1df60f26e1ffddd6c66e8aa15de382ae63b3a0c1bfc0e4d3e3f325cb"
+dependencies = [
+ "ppv-lite86",
+ "rand_core 0.9.3",
 ]
 
 [[package]]
@@ -2308,7 +2338,16 @@ version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.11",
+]
+
+[[package]]
+name = "rand_core"
+version = "0.9.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "99d9a13982dcf210057a8a78572b2217b667c3beacbf3a0d8b454f6f82837d38"
+dependencies = [
+ "getrandom 0.3.2",
 ]
 
 [[package]]
@@ -2636,24 +2675,13 @@ checksum = "0dd7358ecb8fc2f8d014bf86f6f638ce72ba252a2c3a2572f2a795f1d23efb41"
 
 [[package]]
 name = "toml_edit"
-version = "0.19.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b5bb770da30e5cbfde35a2d7b9b8a2c4b8ef89548a7a6aeab5c9a576e3e7421"
-dependencies = [
- "indexmap",
- "toml_datetime",
- "winnow 0.5.33",
-]
-
-[[package]]
-name = "toml_edit"
 version = "0.22.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4ae48d6208a266e853d946088ed816055e556cc6028c5e8e2b84d9fa5dd7c7f5"
 dependencies = [
  "indexmap",
  "toml_datetime",
- "winnow 0.6.20",
+ "winnow",
 ]
 
 [[package]]
@@ -2796,6 +2824,15 @@ name = "wasi"
 version = "0.11.0+wasi-snapshot-preview1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9c8d87e72b64a3b4db28d11ce29237c246188f4f51057d65a7eab63b7987e423"
+
+[[package]]
+name = "wasi"
+version = "0.14.2+wasi-0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9683f9a5a998d873c0d21fcbe3c083009670149a8fab228644b8bd36b2c48cb3"
+dependencies = [
+ "wit-bindgen-rt",
+]
 
 [[package]]
 name = "wasm-bindgen"
@@ -3478,20 +3515,20 @@ dependencies = [
 
 [[package]]
 name = "winnow"
-version = "0.5.33"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b7520bbdec7211caa7c4e682eb1fbe07abe20cee6756b6e00f537c82c11816aa"
-dependencies = [
- "memchr",
-]
-
-[[package]]
-name = "winnow"
 version = "0.6.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "36c1fec1a2bb5866f07c25f68c26e565c4c200aebb96d7e55710c19d3e8ac49b"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "wit-bindgen-rt"
+version = "0.39.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6f42320e61fe2cfd34354ecb597f86f413484a798ba44a8ca1165c58d42da6c1"
+dependencies = [
+ "bitflags 2.6.0",
 ]
 
 [[package]]
@@ -3581,7 +3618,7 @@ dependencies = [
  "hex",
  "nix 0.29.0",
  "ordered-stream",
- "rand",
+ "rand 0.8.5",
  "serde",
  "serde_repr",
  "sha1",
@@ -3625,7 +3662,7 @@ version = "4.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "267db9407081e90bbfa46d841d3cbc60f59c0351838c4bc65199ecd79ab1983e"
 dependencies = [
- "proc-macro-crate 3.2.0",
+ "proc-macro-crate",
  "proc-macro2",
  "quote",
  "syn",
@@ -3662,7 +3699,16 @@ version = "0.7.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "74d4d3961e53fa4c9a25a8637fc2bfaf2595b3d3ae34875568a5cf64787716be"
 dependencies = [
- "zerocopy-derive",
+ "zerocopy-derive 0.7.32",
+]
+
+[[package]]
+name = "zerocopy"
+version = "0.8.24"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2586fea28e186957ef732a5f8b3be2da217d65c5969d4b1e17f973ebbe876879"
+dependencies = [
+ "zerocopy-derive 0.8.24",
 ]
 
 [[package]]
@@ -3670,6 +3716,17 @@ name = "zerocopy-derive"
 version = "0.7.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9ce1b18ccd8e73a9321186f97e46f9f04b778851177567b1975109d26a08d2a6"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "zerocopy-derive"
+version = "0.8.24"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a996a8f63c5c4448cd959ac1bab0aaa3306ccfd060472f85943ee0750f0169be"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3695,7 +3752,7 @@ version = "4.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "73e2ba546bda683a90652bac4a279bc146adad1386f25379cf73200d2002c449"
 dependencies = [
- "proc-macro-crate 3.2.0",
+ "proc-macro-crate",
  "proc-macro2",
  "quote",
  "syn",
