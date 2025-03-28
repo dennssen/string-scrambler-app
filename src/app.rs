@@ -2,7 +2,6 @@
 #[derive(serde::Deserialize, serde::Serialize)]
 #[serde(default)] // if we add new fields, give them default values when deserializing old state
 pub struct TemplateApp {
-    // Example stuff:
     label: String,
     scrambled: String,
 }
@@ -10,7 +9,6 @@ pub struct TemplateApp {
 impl Default for TemplateApp {
     fn default() -> Self {
         Self {
-            // Example stuff:
             label: "".to_owned(),
             scrambled: "".to_owned()
         }
